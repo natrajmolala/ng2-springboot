@@ -1,0 +1,9 @@
+<h2>Vet Page!</h2>
+
+<p *ngIf="veterinaries.length > 3">There are many Veterinaries!</p>
+
+<ul>
+    <li *ngFor="#vet of veterinaries">
+        {{vet}}
+    </li>
+</ul>

@@ -1,0 +1,14 @@
+*.iml
+*.ipr
+*.iws
+.idea/
+target/
+*.jar
+*.log
+*.class
+*.zip
+build
+.DS_Store
+bower_components
+node_modules
+node
