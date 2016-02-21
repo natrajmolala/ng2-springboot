@@ -9,20 +9,25 @@ import {
 
 import {Veterinarian} from './veterinarian';
 import {VetService} from './vet.service';
-import {VetListComponent} from './vet.list';
 import {VetFormComponent} from './vet.form';
 
 @Component({
-    selector: 'vet',
-    templateUrl: './components/vet/vet.component.html',
+    selector: 'vet-list',
+    templateUrl: './components/vet/vet.list.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [HTTP_PROVIDERS, VetService]
 })
 
-@RouteConfig([
-    {path:'/',     name: 'Vet', component: VetListComponent, useAsDefault: true},
-    {path:'/new',  name: 'CreateVet', component: VetFormComponent}
-])
+export class VetListComponent implements OnInit{
 
-export class VetComponent {
+    errorMessage: string;
+    veterinaries: Veterinarian[];
+
+    constructor(private _vetService: VetService){}
+
+    ngOnInit(){
+        this._vetService.getVeterinarians().subscribe(
+            veterinaries => this.veterinaries = veterinaries,
+            error => this.errorMessage = <any>error);
+    }
 }

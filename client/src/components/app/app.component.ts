@@ -21,7 +21,7 @@ import {AboutComponent} from '../about/about.component';
     { path: '/', as: 'Home', component: HomeComponent },
     { path: '/home', as: 'Home', component: HomeComponent },
     { path: '/owner', as: 'Owner', component: OwnerComponent },
-    { path: '/vet', as: 'Vet', component: VetComponent },
+    { path: '/vet/...', as: 'Vet', component: VetComponent },
     { path: '/about', as: 'About', component: AboutComponent }
 ])
 
