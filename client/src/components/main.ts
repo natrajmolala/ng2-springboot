@@ -4,7 +4,7 @@ import {
     Component
 } from 'angular2/core';
 import {APP_BASE_HREF,ROUTER_PROVIDERS, RouterLink, RouteConfig} from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
+import {HTTP_PROVIDERS, HTTP_BINDINGS} from 'angular2/http';
 
 import {AppComponent} from './app/app.component';
 
@@ -13,5 +13,6 @@ import 'rxjs/Rx';
 
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,
+    HTTP_BINDINGS,
     ROUTER_PROVIDERS
 ]);

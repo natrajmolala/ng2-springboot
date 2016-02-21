@@ -26,5 +26,6 @@ import {AboutComponent} from '../about/about.component';
 ])
 
 export class AppComponent {
+    private hello: string = 'Hello';
     items = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
 }

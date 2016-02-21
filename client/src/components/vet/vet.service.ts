@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+import {Http, Headers, RequestOptions, Response} from 'angular2/http';
 
 import {Veterinarian} from './veterinarian';
 import {Observable}   from 'rxjs/Observable';
@@ -7,15 +7,25 @@ import {Observable}   from 'rxjs/Observable';
 @Injectable()
 export class VetService {
 
-    private _vetsUrl = '/api/vet/list';
-
     constructor (private http: Http) {}
 
     getVeterinarians() {
-        return this.http.get(this._vetsUrl)
+        return this.http.get('/api/vet/list')
             .map(res => <Veterinarian[]> res.json())
             .do(data => console.log(data))
             .catch(this.handleError);
+    }
+
+    create(vet:Veterinarian):Observable<Veterinarian> {
+        let body = JSON.stringify(vet);
+        console.log('Body' + body);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('/api/vet/new', body, options)
+            .map(res =>  <Veterinarian> res.json())
+            .do(data => console.log(data))
+            .catch(this.handleError)
     }
 
     private handleError (error: Response) {
@@ -24,4 +34,5 @@ export class VetService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
+
 }

@@ -2,8 +2,10 @@ package com.springboot.server.domain;
 
 public class Veterinarian {
 
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
+
+    public Veterinarian(){}
 
     public Veterinarian(String firstName, String lastName) {
         this.firstName = firstName;
@@ -16,5 +18,13 @@ public class Veterinarian {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
