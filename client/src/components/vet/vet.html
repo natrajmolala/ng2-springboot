@@ -1,9 +1,29 @@
-<h2>Vet Page!</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="admin-actions">
+            <p><a href="/vet/new" class="btn btn-primary"> Create new </a></p>
+        </div>
 
-<p *ngIf="veterinaries.length > 3">There are many Veterinaries!</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">Veterinarians</div>
 
-<ul>
-    <li *ngFor="#vet of veterinaries">
-        {{vet}}
-    </li>
-</ul>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><strong>Name</strong></th>
+                    <th><strong>Speciality</strong></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr *ngFor="#vet of veterinaries">
+                    <td>{{vet.firstName}}</td>
+                    <td>{{vet.lastName}}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

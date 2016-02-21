@@ -15,8 +15,6 @@ var runSequence = require('run-sequence');
  * - build-watch : First does a build and then watches changes in typescript files and html resources. This should be used on the command line or if your IDE does not do do incremental
  * compilation or if you have switched it off.
  *
- * - setup-typings : This sets up the typings folder (angular2-related & rx at the moment). This should be used after an npm update of one of these libraries.
- *
  **/
 
 var PATHS = {
@@ -93,26 +91,6 @@ function compile(args,done) {
     });
 
 }
-
-//gulp.task('clean-angular2-typings', function (callback) {
-//    del(['typings/angular2','typings/es6-shim','typings/jasmine'], {force:true},callback);
-//});
-//
-//gulp.task('setup-angular2-typings', ['clean-angular2-typings'], function () {
-//    return gulp.src('node_modules/angular2/typings1/**/*.d.ts').pipe(gulp.dest(PATHS.typings));
-//});
-//
-//gulp.task('clean-rx-typings', function (callback) {
-//    del(['typings/rx'], {force:true},callback);
-//});
-//
-//gulp.task('setup-rx-typings', ['clean-rx-typings'],function () {
-//    return gulp.src('node_modules/rxjs1/**/*.d.ts').pipe(gulp.dest(PATHS.typings+'/rx'));
-//});
-//
-//gulp.task('setup-typings', function(callback) {
-//    runSequence(['setup-angular2-typings', 'setup-rx-typings'], callback);
-//});
 
 gulp.task('build', function(callback) {
     runSequence('clean-distribution', ['copy-libs', 'copy-html','compile-all'], callback);
