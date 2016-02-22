@@ -14,16 +14,24 @@ export class VetFormComponent{
 
     submitted = false;
     errorMessage: string;
-    vet = new Veterinarian("", "");
+    selectedSpeciality: string;
+
+    vet = new Veterinarian("", "", "");
+    specialities = ["Surgery", "Radiology", "X-Ray", "Nutrition"];
     constructor(private _vetService: VetService){}
 
     onSubmit() {
-        console.log(JSON.stringify(this.vet));
+        this.vet.speciality = this.selectedSpeciality;
+        //console.log(JSON.stringify(this.vet));
         if (!this.vet) {return;}
         this._vetService.create(this.vet)
                 .subscribe(
                         error =>  this.errorMessage = <any>error);
         this.submitted = true;
+    }
+
+    onChange(newVal){
+        this.selectedSpeciality = newVal;
     }
 
 }

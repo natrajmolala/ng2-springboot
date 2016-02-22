@@ -12,6 +12,12 @@
             <input type="text" class="form-control" required [(ngModel)]="vet.lastName" ngControl="lastName"
                    #name="ngForm">
         </div>
+        <div class="form-group">
+            <label for="speciality">Speciality</label>
+            <select [ngModel]="selectedSpeciality" (ngModelChange)="onChange($event)" class="form-control" required>
+                <option *ngFor="#speciality of specialities" [value]="speciality">{{speciality}}</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-default" [disabled]="!vetForm.form.valid">Submit</button>
     </form>
 </div>
@@ -25,5 +31,9 @@
     <div class="row">
         <div class="col-xs-3">Last Name</div>
         <div class="col-xs-9 pull-left">{{ vet.lastName }}</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">Speciality</div>
+        <div class="col-xs-9 pull-left">{{ vet.speciality }}</div>
     </div>
 </div>

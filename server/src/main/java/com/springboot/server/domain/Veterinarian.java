@@ -1,15 +1,38 @@
 package com.springboot.server.domain;
 
-public class Veterinarian {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.io.Serializable;
 
+@Entity
+public class Veterinarian implements Serializable {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
 
-    public Veterinarian(){}
+    @Column(nullable = false)
+    private String speciality;
 
-    public Veterinarian(String firstName, String lastName) {
+    public Veterinarian() {
+    }
+
+    public Veterinarian(String firstName, String lastName, String speciality) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.speciality = speciality;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -20,11 +43,7 @@ public class Veterinarian {
         return lastName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getSpeciality() {
+        return speciality;
     }
 }
