@@ -1,2 +1,5 @@
 ## Setup
- npm install
+> npm install
+
+## Build client components
+> gulp build
