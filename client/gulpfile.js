@@ -1,127 +1,225 @@
-var gulp = require('gulp');
-var del = require('del');
-var os = require('os');
-var childProcess = require('child_process');
-var runSequence = require('run-sequence');
+const autoprefixer = require('autoprefixer');
+const browserSync  = require('browser-sync');
+const changed      = require('gulp-changed');
+const del          = require('del');
+const exec         = require('child_process').exec;
+const gulp         = require('gulp');
+const historyApi   = require('connect-history-api-fallback');
+const karma        = require('karma');
+const postcss      = require('gulp-postcss');
+const sass         = require('gulp-sass');
+const sourcemaps   = require('gulp-sourcemaps');
+const tslint       = require('gulp-tslint');
+const typescript   = require('gulp-typescript');
 
-/**
- * The only tasks that you probably need are:
- *
- * - build : First cleans distribution folder, then adds libs, compiles typescript files and copies html resources to the distribution folder. The compilation expects
- * a tsconfig.json file.
- *
- * - build-watch-resources : First does a build and then watches changes in html resources. This should be used if your IDE does the incremental compilation.
- *
- * - build-watch : First does a build and then watches changes in typescript files and html resources. This should be used on the command line or if your IDE does not do do incremental
- * compilation or if you have switched it off.
- *
- **/
 
-var PATHS = {
+//=========================================================
+//  PATHS
+//---------------------------------------------------------
+const paths = {
+    lib: {
+        src: [
+            'node_modules/angular2/bundles/angular2-polyfills.js',
+            'node_modules/es6-shim/es6-shim.{map,min.js}',
+
+            'node_modules/angular2/bundles/angular2.dev.js',
+            'node_modules/angular2/bundles/http.dev.js',
+            'node_modules/angular2/bundles/router.dev.js',
+            /* module loader (polyfill needed for ie) */
+            'node_modules/systemjs/dist/system-polyfills.js',
+            'node_modules/systemjs/dist/system.{js,js.map}',
+            /* if you want to use rx, otherwise not necessary */
+            'node_modules/rxjs/bundles/Rx.{js,min.js,min.js.map}',
+            /* included in order to use bootstrap */
+            //'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf'
+        ],
+        target: 'dist/lib'
+    },
+
     src: {
         html: 'src/**/*.html',
+        sass: 'src/**/*.scss',
+        ts: 'src/**/*.ts',
         assets: 'src/assets/**/*.*'
     },
-    lib: [
-        /* angular 2 libraries */
-        'node_modules/angular2/bundles/angular2-polyfills.js',
-        'node_modules/es6-shim/es6-shim.min.js',
 
-        'node_modules/angular2/bundles/angular2.dev.js',
-        'node_modules/angular2/bundles/http.dev.js',
-        'node_modules/angular2/bundles/router.dev.js',
-        /* module loader (polyfill needed for ie) */
-        'node_modules/systemjs/dist/system-polyfills.js',
-        'node_modules/systemjs/dist/system.js',
-        /* if you want to use rx, otherwise not necessary */
-        'node_modules/rxjs/bundles/Rx.js',
-        /* included in order to use bootstrap */
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf'
-    ],
+    target: 'dist',
 
-    //dist: '../server/src/main/resources/static/app'
-    dist: 'dist'
+    typings: {
+        entries: 'typings/tsd.d.ts',
+        watch: 'typings/**/*.ts'
+    }
 };
 
-function deleteFiles(fileList,done) {
-    del(fileList, {force:true}, done);
+
+//=========================================================
+//  CONFIG
+//---------------------------------------------------------
+const config = {
+    autoprefixer: {
+        browsers: ['last 3 versions', 'Firefox ESR']
+    },
+
+    browserSync: {
+        files: [paths.target + '/**/*'],
+        notify: false,
+        open: false,
+        port: 3000,
+        reloadDelay: 500,
+        server: {
+            baseDir: paths.target,
+            middleware: [
+                historyApi()
+            ]
+        }
+    },
+
+    karma: {
+        configFile: __dirname + '/karma.conf.js'
+    },
+
+    sass: {
+        errLogToConsole: true,
+        outputStyle: 'nested',
+        precision: 10,
+        sourceComments: false
+    },
+
+    ts: {
+        configFile: 'tsconfig.json'
+    },
+
+    tslint: {
+        report: {
+            options: {emitError: true},
+            type: 'verbose'
+        }
+    }
+};
+
+
+//=========================================================
+//  TASKS
+//---------------------------------------------------------
+gulp.task('clean.target', () => del(paths.target));
+
+
+gulp.task('copy.html', () => {
+    return gulp.src(paths.src.html)
+        .pipe(gulp.dest(paths.target));
+});
+
+
+gulp.task('copy.lib', () => {
+    return gulp.src(paths.lib.src)
+        .pipe(gulp.dest(paths.lib.target));
+});
+
+
+gulp.task('lint', () => {
+    return gulp.src(paths.src.ts)
+        .pipe(tslint())
+        .pipe(tslint.report(
+            config.tslint.report.type,
+            config.tslint.report.options
+        ));
+});
+
+
+gulp.task('sass', () => {
+    return gulp.src(paths.src.sass)
+        .pipe(sass(config.sass))
+        .pipe(postcss([
+            autoprefixer(config.autoprefixer)
+        ]))
+        .pipe(gulp.dest(paths.target));
+});
+
+
+gulp.task('serve', done => {
+    browserSync.create()
+    .init(config.browserSync, done);
+});
+
+
+const tsProject = typescript.createProject(config.ts.configFile);
+
+gulp.task('ts', () => {
+    return gulp.src([paths.src.ts, paths.typings.entries], {allowEmpty: true})
+        .pipe(changed(paths.target, {extension: '.js'}))
+        .pipe(sourcemaps.init())
+        .pipe(typescript(tsProject))
+        .js
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(paths.target));
+});
+
+
+//===========================
+//  BUILD
+//---------------------------
+gulp.task('build', gulp.series(
+    'clean.target',
+    'copy.html',
+    'copy.lib',
+    'sass',
+    'ts'
+));
+
+
+//===========================
+//  DEVELOP
+//---------------------------
+gulp.task('default', gulp.series(
+    'build',
+    'serve',
+    function watch(){
+        gulp.watch(paths.src.html, gulp.task('copy.html'));
+        gulp.watch(paths.src.sass, gulp.task('sass'));
+        gulp.watch([paths.src.ts, paths.typings.watch], gulp.task('ts'));
+    }
+));
+
+
+//===========================
+//  TEST
+//---------------------------
+function karmaServer(options, done) {
+    const server = new karma.Server(options, error => {
+            if (error) process.exit(error);
+    done();
+});
+server.start();
 }
 
-gulp.task('clean-distribution', function (done) {
-    deleteFiles([PATHS.dist],done);
+
+gulp.task('karma', done => {
+    config.karma.singleRun = true;
+karmaServer(config.karma, done);
 });
 
-gulp.task('clean-typings', function (done) {
-    del(['typings'], {force:true},done);
+
+gulp.task('karma.watch', done => {
+    karmaServer(config.karma, done);
 });
 
-/* This utility task compiles all typescript files by calling the tsc compiler. */
-gulp.task('compile-all', function(done) {
-    compile([],done);
+
+gulp.task('karma.run', done => {
+    const cmd = process.platform === 'win32' ? 'node_modules\\.bin\\karma run karma.conf.js' : 'node node_modules/.bin/karma run karma.conf.js';
+exec(cmd, (/*error, stdout*/) => {
+    done();
+});
 });
 
-/* This utility task compiles all typescript files and starts watching changes using the tsc compiler. */
-gulp.task('compile-all-watch-ts', function(done) {
-    compile(['--watch'],done);
-});
 
-function compile(args,done) {
+gulp.task('test', gulp.series('lint', 'build', 'karma'));
 
-    var isWindows = /^win/.test(os.platform());
-    var command =  isWindows ?  "tsc.cmd" : "tsc";
 
-    var child = childProcess.spawn(command,args);
-
-    child.stdout.on('data', function (data) {
-        process.stdout.write(data);
-    });
-
-    child.stderr.on('data', function (data) {
-        process.stderr.write('Compilation failed with error: ' + data);
-        process.exit();
-    });
-
-    child.on('exit', function (code) {
-        process.stdout.write('Compilation finished with code: ' + code + '\n');
-        done();
-    });
-
-}
-
-gulp.task('build', function(callback) {
-    runSequence('clean-distribution', ['copy-libs', 'copy-html','compile-all'], callback);
-});
-
-gulp.task('build-watch-ts', function(callback) {
-    runSequence('clean-distribution', ['copy-libs', 'copy-html','compile-all-watch-ts'], callback);
-});
-
-gulp.task('copy-html', function () {
-    gulp.src(PATHS.src.assets).pipe(gulp.dest(PATHS.dist));
-    return gulp.src(PATHS.src.html).pipe(gulp.dest(PATHS.dist));
-});
-
-gulp.task('copy-libs', function () {
-    return gulp.src(PATHS.lib).pipe(gulp.dest(PATHS.dist + '/lib'));
-});
-
-function watchResources() {
-    gulp.watch(PATHS.src.html, ['copy-html']);
-}
-
-gulp.task('watch-resources',  function () {
-    watchResources();
-});
-
-gulp.task('build-watch-resources', ['build'], function() {
-    watchResources();
-});
-
-gulp.task('build-watch', ['build-watch-ts'], function() {
-    watchResources();
-});
-
+gulp.task('test.watch', gulp.parallel(
+        gulp.series('lint', 'build', 'karma.watch'),
+        () => gulp.watch(paths.src.ts, gulp.series('ts', 'karma.run'))
+));

@@ -2,24 +2,39 @@
   "name": "angular2-client",
   "version": "1.0.0-SNAPSHOT",
   "description": "An angular2 project with Spring Boot",
+  "scripts": {
+    "start": "./node_modules/.bin/gulp",
+    "test": "./node_modules/.bin/gulp test"
+  },
   "devDependencies": {
-    "del": "^1.2.0",
-    "gulp": "^3.9.0",
-    "gulp-typescript": "^2.8.0",
-    "jasmine-core": "2.4.1",
+    "autoprefixer": "~6.1.2",
+    "browser-sync": "~2.10.1",
+    "connect-history-api-fallback": "~1.1.0",
+    "del": "~2.2.0",
+    "gulp": "gulpjs/gulp.git#4.0",
+    "gulp-changed": "~1.3.0",
+    "gulp-postcss": "~6.0.1",
+    "gulp-sass": "~2.1.1",
+    "gulp-sourcemaps": "~1.6.0",
+    "gulp-tslint": "~4.2.1",
+    "gulp-typescript": "~2.10.0",
+    "jasmine-core": "~2.4.1",
+    "karma": "~0.13.15",
+    "karma-chrome-launcher": "~0.2.2",
+    "karma-jasmine": "~0.3.6",
+    "reflect-metadata": "0.1.2",
     "run-sequence": "^1.1.4",
     "typescript": "^1.8.0",
+    "zone.js": "0.5.10",
+    "tslint": "~3.2.0",
     "typings": "^0.6.8"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.6",
-    "es6-promise": "^3.0.2",
+    "angular2": "2.0.0-beta.0",
     "es6-shim": "^0.33.3",
-    "reflect-metadata": "0.1.2",
-    "systemjs": "0.18.4",
     "rxjs": "5.0.0-beta.0",
-    "zone.js": "0.5.14",
-    "bootstrap": "^3.3.0",
-    "jquery": "^2.1.0"
+    "systemjs": "~0.19.8",
+    "bootstrap": "^3.3.0"
+
   }
 }
