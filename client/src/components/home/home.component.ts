@@ -6,5 +6,6 @@ import {Component} from 'angular2/core';
 })
 
 export class HomeComponent {
+    constructor();
     greeting: string = 'Hello world!';
 }
