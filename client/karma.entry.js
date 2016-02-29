@@ -9,12 +9,12 @@ __karma__.loaded = function(){};
 
 System.config({
   packages: {
-    'base/target': {
+    'base/dist': {
       defaultExtension: 'js',
       map: Object.keys(window.__karma__.files)
         .filter(filterSourceFiles)
         .reduce(function(mapping, path){
-          var moduleName = path.replace(/^\/base\/target\//, './').replace(/\.js$/, '');
+          var moduleName = path.replace(/^\/base\/dist\//, './').replace(/\.js$/, '');
           mapping[moduleName] = path + '?' + window.__karma__.files[path];
           return mapping;
         }, {})
@@ -39,7 +39,7 @@ System.import('angular2/src/platform/browser/browser_adapter')
 
 
 function filterSourceFiles(path) {
-  return /^\/base\/target\/.*\.js$/.test(path)
+  return /^\/base\/dist\/.*\.js$/.test(path)
 }
 
 function filterTestFiles(path) {

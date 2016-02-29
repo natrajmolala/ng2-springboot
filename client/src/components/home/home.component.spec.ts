@@ -25,30 +25,8 @@ describe('Home', () => {
     home = new HomeComponent();
   });
 
-  it('should work', () => {
-    //expect(home.greeting).toBe('Hello World');
-    //http://stackoverflow.com/questions/33412104/angular-2-unit-tests-with-karma
-    expect(true).toBe(true);
+  it('should display a greeting', () => {
+    expect(home.greeting).toBe('Hello world!');
   });
 
-  //it('should display a greeting', inject([TestComponentBuilder], tcb => {
-  //  tcb.createAsync(HomeComponent)
-  //    .then(fixture => {
-  //      fixture.detectChanges();
-  //      let compiled = fixture.nativeElement;
-  //
-  //      expect(compiled.querySelector('h3')).toHaveText('Hello world!');
-  //    });
-  //}));
-  //
-  //it('should display a greeting (overrideTemplate)', inject([TestComponentBuilder], tcb => {
-  //  tcb.overrideTemplate(TestComponent, '<home></home>')
-  //    .createAsync(HomeComponent)
-  //    .then(fixture => {
-  //      fixture.detectChanges();
-  //      let compiled = fixture.nativeElement;
-  //
-  //      expect(compiled.querySelector('h3')).toHaveText('Hello world!');
-  //    });
-  //}));
 });
