@@ -113,6 +113,10 @@ gulp.task('copy.html', () => {
         .pipe(gulp.dest(paths.target));
 });
 
+gulp.task('copy.assets', () => {
+    return gulp.src(paths.src.assets)
+        .pipe(gulp.dest(paths.target));
+});
 
 gulp.task('copy.lib', () => {
     return gulp.src(paths.lib.src)
@@ -165,6 +169,7 @@ gulp.task('ts', () => {
 gulp.task('build', gulp.series(
     'clean.target',
     'copy.html',
+    'copy.assets',
     'copy.lib',
     'sass',
     'ts'

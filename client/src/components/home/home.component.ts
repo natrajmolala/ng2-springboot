@@ -6,5 +6,5 @@ import {Component} from 'angular2/core';
 })
 
 export class HomeComponent {
-    greeting: string = 'Hello world!';
+    title: string = 'Welcome to Pet clinic!';
 }

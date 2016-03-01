@@ -26,7 +26,7 @@ describe('Home', () => {
   });
 
   it('should display a greeting', () => {
-    expect(home.greeting).toBe('Hello world!');
+    expect(home.title).toBe('Welcome to Pet clinic!');
   });
 
 });
