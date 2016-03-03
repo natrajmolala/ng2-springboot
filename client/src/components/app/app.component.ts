@@ -2,7 +2,8 @@ import {Component, ViewEncapsulation} from 'angular2/core';
 import {
     RouteConfig,
     ROUTER_DIRECTIVES,
-    RouterLink
+    RouterLink,
+    Location
 } from 'angular2/router';
 
 import {HomeComponent} from '../home/home.component';
@@ -26,6 +27,14 @@ import {AboutComponent} from '../about/about.component';
 ])
 
 export class AppComponent {
-    private hello: string = 'Hello';
-    items = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+    constructor(private _location: Location) {
+    }
+
+    isActive(path){
+        if (this._location.path() == "" && (path == "/home" || path == "/") || path == ""){
+            return true;
+        }
+        return this._location.path().lastIndexOf(path, 0) === 0;
+    }
+
 }

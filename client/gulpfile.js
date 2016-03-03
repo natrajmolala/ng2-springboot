@@ -31,7 +31,7 @@ const paths = {
             /* if you want to use rx, otherwise not necessary */
             'node_modules/rxjs/bundles/Rx.{js,min.js,min.js.map}',
             /* included in order to use bootstrap */
-            //'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/jquery/dist/jquery.min.js',
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
