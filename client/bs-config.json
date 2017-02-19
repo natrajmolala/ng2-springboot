@@ -1,4 +1,5 @@
 {
+  "browser": "google chrome",
   "server": {
     "baseDir": "dist",
     "routes": {

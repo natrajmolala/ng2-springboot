@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Angular QuickStart</title>
+<head>
+    <title>Pet Clinic</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css"/>
 
-    <title>Pet Clinic</title>
-
     <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
 
@@ -23,10 +21,18 @@
     <script src="systemjs.config.js"></script>
     <script>
       System.import('main.js').catch(function(err){ console.error(err); });
-    </script>
-  </head>
 
-  <body>
-    <my-app>Loading AppComponent content here ...</my-app>
-  </body>
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <my-app>Loading application ...</my-app>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

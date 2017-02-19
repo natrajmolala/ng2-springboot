@@ -6,7 +6,7 @@
     "clean": "rm -rf dist && echo 'dist folder cleaned...'",
     "build": "tsc -p src/ && echo 'tsc executed...'",
     "cp-config": "copyfiles -f src/*.html src/*.css src/*config.js dist && echo 'config files copied...'",
-    "html": "cd src && copyfiles app/**/*.html app/**/*.css ../dist",
+    "html": "cd src && copyfiles assets/**/*.*  app/*.html app/**/*.html ../dist",
     "build:watch": "tsc -p src/ -w",
     "build:e2e": "tsc -p e2e/",
     "serve": "lite-server -c=bs-config.json",
