@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "sourceRoot": "/app-src",
     "outDir": "../dist",
     "target": "es5",
     "module": "commonjs",
