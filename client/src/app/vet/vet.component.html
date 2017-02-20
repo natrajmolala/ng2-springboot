@@ -1,7 +1,27 @@
 <h2>{{title}}</h2>
-<p class="text-justify">
-    Lorem ipsum dolor sit amet, at assum dicam mea, splendide concludaturque no sed. Ea mel appareat laboramus. Alterum
-    omnesque est ei, at pri eirmod alterum laoreet. Vix ea mandamus interpretaris. Nulla essent vivendo mei ex. At sit
-    populo electram, error elitr expetendis vis ne, alterum nonumes legendos vim ad. At cum quando definitiones, errem
-    democritum quo in.
-</p>
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">Veterinarians</div>
+
+        <p *ngIf="errorMessage">
+            {{errorMessage}}
+        </p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th><strong>Name</strong></th>
+                <th><strong>Speciality</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr *ngFor="let vet of veterinaries">
+                <td>{{ vet.firstName }}&nbsp;{{ vet.lastName }}</td>
+                <td>{{ vet.speciality }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,9 +1,0 @@
-{
-  "browser": "google chrome",
-  "server": {
-    "baseDir": "dist",
-    "routes": {
-      "/node_modules": "node_modules"
-    }
-  }
-}
