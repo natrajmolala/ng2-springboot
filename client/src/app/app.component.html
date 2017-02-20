@@ -23,16 +23,16 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav">
-                        <li>
+                        <li [ngClass]="{ active: isActive('/home')}">
                             <a routerLink="/home" routerLinkActive="active">Home</a>
                         </li>
-                        <li>
+                        <li [ngClass]="{ active: isActive('/owner')}">
                             <a routerLink="/owner" routerLinkActive="active">Owner</a>
                         </li>
-                        <li>
+                        <li [ngClass]="{ active: isActive('/vet')}">
                             <a routerLink="/vet" routerLinkActive="active">Veterinary</a>
                         </li>
-                        <li>
+                        <li [ngClass]="{ active: isActive('/about')}">
                             <a routerLink="/about" routerLinkActive="active">About</a>
                         </li>
                     </ul>

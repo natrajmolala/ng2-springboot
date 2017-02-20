@@ -1,7 +1,7 @@
 var proxy = require('http-proxy-middleware');
 
 var apiProxy = proxy('/api', {
-    target: 'http://localhost:8080',
+    target: 'http://localhost:8081',
     changeOrigin: true   // for vhosted sites
 });
 
