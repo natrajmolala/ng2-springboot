@@ -1,26 +1,28 @@
 <h2>{{title}}</h2>
 <div class="col-md-6">
+    <div class="admin-actions">
+        <p><a [routerLink]="['new']" class="btn btn-primary">Create new</a></p>
+        <router-outlet></router-outlet>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-heading">Veterinarians</div>
-
         <p *ngIf="errorMessage">
             {{errorMessage}}
         </p>
 
         <table class="table">
             <thead>
-            <tr>
-                <th><strong>Name</strong></th>
-                <th><strong>Speciality</strong></th>
-            </tr>
+                <tr>
+                    <th><strong>Name</strong></th>
+                    <th><strong>Speciality</strong></th>
+                </tr>
             </thead>
             <tbody>
-
-            <tr *ngFor="let vet of veterinaries">
-                <td>{{ vet.firstName }}&nbsp;{{ vet.lastName }}</td>
-                <td>{{ vet.speciality }}</td>
-            </tr>
-
+                <tr *ngFor="let vet of veterinaries">
+                    <td>{{ vet.firstName }}&nbsp;{{ vet.lastName }}</td>
+                    <td>{{ vet.speciality }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

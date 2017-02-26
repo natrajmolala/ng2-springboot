@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable }   from 'rxjs/Rx';
 
 import { Veterinarian } from './veterinarian';
@@ -16,6 +16,17 @@ constructor (private http: Http) {}
             .map(res => <Veterinarian[]> res.json())
             .do(data => console.log(data))
             .catch(this.handleError);
+    }
+
+    create (vet: Veterinarian): Observable<Veterinarian> {
+        console.log('Body: ' + vet);
+        let options = new RequestOptions({headers: this.getHeaders()});
+
+        return this.http
+            .post('/api/vet/new', vet, options)
+            .map(res =>  <Veterinarian> res.json())
+            .do(data => console.log(data))
+            .catch(this.handleError)
     }
 
     private handleError (error: Response) {
