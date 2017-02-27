@@ -12,15 +12,30 @@ import { VetService } from './vet.service';
 export class VetComponent implements OnInit {
     title: string = 'Vet page of Pet clinic!';
     errorMessage: string;
+
     veterinaries: Veterinarian[];
+    addingVet = false;
 
     constructor(private _vetService: VetService){}
 
     ngOnInit(){
-        this._vetService
+        this.getAllVets();
+    }
+
+    getAllVets(): void {
+      this._vetService
         .getAll()
         .subscribe(
             veterinaries => this.veterinaries = veterinaries,
             error => this.errorMessage = <any>error);
+    }
+
+    addVet(): void {
+      this.addingVet = true;
+    }
+
+    close(savedVet: Veterinarian): void {
+      this.addingVet = false;
+      if (savedVet) { this.getAllVets(); }
     }
 }

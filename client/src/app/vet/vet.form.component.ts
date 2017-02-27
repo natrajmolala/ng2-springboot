@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, EventEmitter, NgModule, OnInit, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -11,33 +11,36 @@ import { VetService } from './vet.service';
     providers: [ VetService ]
 })
 
-export class VetFormComponent {
+export class VetFormComponent implements OnInit {
+
+    @Input() vet: Veterinarian;
+    @Output() close = new EventEmitter();
 
     submitted = false;
     errorMessage: string;
     selectedSpeciality: string;
-
-    vet = new Veterinarian("", "", "");
     specialities = ["Surgery", "Radiology", "X-Ray", "Nutrition"];
+
     constructor(private router: Router, private vetService: VetService){
-        //vetService.vetAdded$.subscribe(
-         //     vet => {
-         //       this.history.push('${vet} added');
-          //    });
+    }
+
+    ngOnInit(): void {
+      this.vet = new Veterinarian("", "", "");
     }
 
     onSubmit() {
         console.log(JSON.stringify(this.vet));
         if (!this.vet) {return;}
-        this.vetService.create(this.vet)
-                .subscribe(
-                        error =>  this.errorMessage = <any>error);
+        this.vetService
+              .create(this.vet)
+              .subscribe(saveResult => { this.vet = saveResult; this.refreshList(saveResult); },
+               error =>  this.errorMessage = <any>error);
 
         this.submitted = true;
-        //this.vetService.confirmVetAdded(this.vet);
+    }
 
-        //refresh list
-        //this.router.navigate(['/vet']);
+    refreshList(savedVet: Veterinarian = null): void {
+      this.close.emit(savedVet);
     }
 
 }
