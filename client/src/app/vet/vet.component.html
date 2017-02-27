@@ -1,10 +1,14 @@
 <h2>{{title}}</h2>
-<div class="col-md-6">
-    <div class="admin-actions">
-        <p><a [routerLink]="['new']" class="btn btn-primary">Create new</a></p>
+
+
+<div class="col-md-6 admin-actions">
+    <p><a [routerLink]="['new']" class="btn btn-primary">Add new</a></p>
+    <div>
         <router-outlet></router-outlet>
     </div>
+</div>
 
+<div class="col-md-9 panel">
     <div class="panel panel-default">
         <div class="panel-heading">Veterinarians</div>
         <p *ngIf="errorMessage">
@@ -13,16 +17,16 @@
 
         <table class="table">
             <thead>
-                <tr>
-                    <th><strong>Name</strong></th>
-                    <th><strong>Speciality</strong></th>
-                </tr>
+            <tr>
+                <th><strong>Name</strong></th>
+                <th><strong>Speciality</strong></th>
+            </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let vet of veterinaries">
-                    <td>{{ vet.firstName }}&nbsp;{{ vet.lastName }}</td>
-                    <td>{{ vet.speciality }}</td>
-                </tr>
+            <tr *ngFor="let vet of veterinaries">
+                <td>{{ vet.firstName }}&nbsp;{{ vet.lastName }}</td>
+                <td>{{ vet.speciality }}</td>
+            </tr>
             </tbody>
         </table>
     </div>

@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { Veterinarian } from './veterinarian';
@@ -18,15 +19,25 @@ export class VetFormComponent {
 
     vet = new Veterinarian("", "", "");
     specialities = ["Surgery", "Radiology", "X-Ray", "Nutrition"];
-    constructor(private _vetService: VetService){}
+    constructor(private router: Router, private vetService: VetService){
+        //vetService.vetAdded$.subscribe(
+         //     vet => {
+         //       this.history.push('${vet} added');
+          //    });
+    }
 
     onSubmit() {
         console.log(JSON.stringify(this.vet));
         if (!this.vet) {return;}
-        this._vetService.create(this.vet)
+        this.vetService.create(this.vet)
                 .subscribe(
                         error =>  this.errorMessage = <any>error);
+
         this.submitted = true;
+        //this.vetService.confirmVetAdded(this.vet);
+
+        //refresh list
+        //this.router.navigate(['/vet']);
     }
 
 }

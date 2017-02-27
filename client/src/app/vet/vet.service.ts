@@ -1,7 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Observable }   from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Rx';
 
 import { Veterinarian } from './veterinarian';
 
@@ -9,6 +10,11 @@ import { Veterinarian } from './veterinarian';
 export class VetService {
 
 constructor (private http: Http) {}
+
+  // Observable string sources
+  //private vetAddedSource = new Subject<string>();
+  // Observable string streams
+  //vetAdded$ = this.vetAddedSource.asObservable();
 
     getAll(): Observable<Veterinarian[]> {
         return this.http
@@ -28,6 +34,10 @@ constructor (private http: Http) {}
             .do(data => console.log(data))
             .catch(this.handleError)
     }
+
+    //confirmVetAdded (vet: Veterinarian) {
+      //this.vetAddedSource.next(vet);
+    //}
 
     private handleError (error: Response) {
         // in a real world app, we may send the server to some remote logging infrastructure
