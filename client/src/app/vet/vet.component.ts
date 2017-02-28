@@ -30,8 +30,16 @@ export class VetComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
-    addVet(): void {
+    add(): void {
       this.addingVet = true;
+    }
+
+    delete(selectedVet: Veterinarian): void {
+      console.log('delete called for: ' + selectedVet);
+      this._vetService
+      .delete(selectedVet['id'])
+      .subscribe(saveResult => { this.getAllVets(); },
+                     error =>  this.errorMessage = <any>error);;
     }
 
     close(savedVet: Veterinarian): void {

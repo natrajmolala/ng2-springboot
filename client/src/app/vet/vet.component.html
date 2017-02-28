@@ -1,7 +1,7 @@
-<h2>{{title}}</h2>
+<h3>{{title}}</h3>
 
 <div class="col-md-6 panel">
-    <button (click)="addVet()" class="btn btn-primary">Add New Vet</button>
+    <button (click)="add()" class="btn btn-primary">Add New Vet</button>
     <div *ngIf="addingVet">
         <vet-form (close)="close($event)"></vet-form>
     </div>
@@ -24,7 +24,9 @@
             <tbody>
                 <tr *ngFor="let vet of veterinaries">
                     <td>{{ vet.firstName }}&nbsp;{{ vet.lastName }}</td>
-                    <td>{{ vet.speciality }}</td>
+                    <td>{{ vet.speciality }}<span>&nbsp;</span>
+                        <button (click)="delete(vet); $event.stopPropagation()" class="btn btn-danger pull-right">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

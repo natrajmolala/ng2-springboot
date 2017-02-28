@@ -23,6 +23,7 @@ import java.util.Arrays;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -72,6 +73,12 @@ public class VetControllerTest {
         this.mockMvc.perform(post("/api/vet/new")
                 .contentType(contentType)
                 .content(bookmarkJson))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteVet() throws Exception {
+        this.mockMvc.perform(delete("/api/vet/delete/1"))
                 .andExpect(status().isOk());
     }
 

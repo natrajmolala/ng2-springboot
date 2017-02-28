@@ -11,11 +11,6 @@ export class VetService {
 
 constructor (private http: Http) {}
 
-  // Observable string sources
-  //private vetAddedSource = new Subject<string>();
-  // Observable string streams
-  //vetAdded$ = this.vetAddedSource.asObservable();
-
     getAll(): Observable<Veterinarian[]> {
         return this.http
             .get('/api/vet/list', {headers: this.getHeaders()})
@@ -32,12 +27,16 @@ constructor (private http: Http) {}
             .post('/api/vet/new', vet, options)
             .map(res =>  <Veterinarian> res.json())
             .do(data => console.log(data))
-            .catch(this.handleError)
+            .catch(this.handleError);
     }
 
-    //confirmVetAdded (vet: Veterinarian) {
-      //this.vetAddedSource.next(vet);
-    //}
+    delete (id: number): Observable<string> {
+        let options = new RequestOptions({headers: this.getHeaders()});
+
+        return this.http
+            .delete("/api/vet/delete/" + id, options)
+            .catch(this.handleError);
+    }
 
     private handleError (error: Response) {
         // in a real world app, we may send the server to some remote logging infrastructure
