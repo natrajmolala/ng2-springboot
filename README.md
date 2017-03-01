@@ -3,5 +3,7 @@
 2. cd server and run mvn clean package
 
 ## Run 
-1. cd client and run gulp build
-> cd server and run mvn spring-boot:run
+1. From client root folder
+   > npm run clean && npm run prestart && npm run serve
+2. From server root folder
+   > mvn spring-boot:run
